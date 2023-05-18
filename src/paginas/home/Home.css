@@ -1,4 +1,4 @@
-.titulo{
+/* .titulo{
     color:blueviolet;
     text-align: center;
 }
@@ -8,4 +8,23 @@
     height: 500px;
     display: block;
     margin: 0 auto;
+} */
+
+.caixa{
+    background-color: #3F51B5;
+}
+
+.titulo{
+    color: white !important;
+    font-weight: bold !important
+}
+
+.botao{
+    border-color:white !important;
+    background-color: #3F51B5;
+     color: white !important
+}
+
+.postagens{
+   background-color: white 
 }
