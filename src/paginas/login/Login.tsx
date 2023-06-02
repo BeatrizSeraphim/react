@@ -6,9 +6,8 @@ import { login } from '../../services/Service';
 import UserLogin from '../../models/UserLogin';
 import './Login.css';
 import { useDispatch } from 'react-redux';
-
+import { addId, addToken } from "../../store/token/Actions";
 import { toast } from 'react-toastify';
-import { addToken } from '../../store/token/Actions';
 
 function Login() {
     let navigate = useNavigate()
@@ -17,10 +16,21 @@ function Login() {
 
     const [userLogin, setUserLogin] = useState<UserLogin>({
         id: 0,
+        // nome: '',
         usuario: '',
+        // foto: '',
         senha: '',
         token: ''
         })
+
+    const [respUserLogin, setRespUserLogin] = useState<UserLogin>({
+        id: 0,
+        // nome: '',
+        usuario: '',
+        // foto: '',
+        senha: '',
+        token: ''
+    })
 
     function updatedModel(e: ChangeEvent<HTMLInputElement>) {
 
@@ -32,13 +42,16 @@ function Login() {
     }
 
     useEffect(() => {
-        if (token !== '') {
-            console.log("Token:", token)
+        if (respUserLogin.token !== "") {
 
-            dispatch(addToken(token))
+            console.log("Token: " + respUserLogin.token)
+            console.log("ID: " + respUserLogin.id)
+
+            dispatch(addToken(respUserLogin.token))
+            dispatch(addId(respUserLogin.id.toString()))    
             navigate('/home')
         }
-    }, [token])
+    }, [respUserLogin.token])
 
 
     async function onSubmit(e: ChangeEvent<HTMLFormElement>) {
@@ -57,10 +70,10 @@ function Login() {
                 theme: 'colored',
                 progress: undefined,
             });
-        } catch (error) {
+        } catch (error) {(
             
    
-            toast.error('Erro ao efetuar login! Verifique os dados do Usuário!', {
+            toast.error('Erro ao efetuar login! Verifique os dados do Usuário!'), {
                 position: 'top-right',
                 autoClose: 2000,
                 hideProgressBar: false,
