@@ -2,46 +2,58 @@ import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Postagem from '../../../models/Postagem';
 import { busca } from '../../../services/Service'
-import {Card, CardActions, CardContent, Button, Typography } from '@material-ui/core';
-import {Box} from '@mui/material';
+import { Card, CardActions, CardContent, Button, Typography } from '@material-ui/core';
+import { Box } from '@mui/material';
 import './ListaPostagem.css';
 
 import { useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux';
-import { TokenState } from '../../../store/tokens/tokensReducer';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { toast } from 'react-toastify';
+import { addToken } from '../../../store/token/Actions';
+import { UserState } from '../../../store/token/Reducer';
 
 function ListaPostagem() {
-  const [posts, setPosts] = useState<Postagem[]>([])
-  
   let navigate = useNavigate();
-  const token = useSelector<TokenState, TokenState["tokens"]>(
+
+  const [posts, setPosts] = useState<Postagem[]>([])
+
+  const dispatch = useDispatch()
+
+  const token = useSelector<UserState, UserState["tokens"]>(
     (state) => state.tokens
-  );
+  )
 
   useEffect(() => {
-    if (token == "") {
-     toast.error("Você precisa estar logado", {
-      position: "top-right",
-      autoClose: 2000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: false,
-      draggable: false,
-      theme: "colored",
-      progress: undefined,
-     });
+    if (token === "") {
+      toast.error("Você precisa estar logado", {
+        position: "top-right",
+        autoClose: 2000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: false,
+        draggable: false,
+        theme: "colored",
+        progress: undefined,
+      });
       navigate("/login")
 
     }
   }, [token])
 
   async function getPost() {
-    await busca("/postagens", setPosts, {
-      headers: {
-        'Authorization': token
+    try {
+      await busca("/postagens", setPosts, {
+        headers: {
+          'Authorization': token
+        }
+      })
+
+    } catch (error: any) {
+      if (error.response?.status === 403) {
+        dispatch(addToken(''))
       }
-    })
+    }
   }
 
   useEffect(() => {
@@ -52,7 +64,7 @@ function ListaPostagem() {
 
   return (
     <>
-      {
+      {posts.length === 0 ? (<div className="spinner"></div>) : (
         posts.map(post => (
           <Box m={2} >
             <Card variant="outlined">
@@ -69,7 +81,13 @@ function ListaPostagem() {
                 <Typography variant="body2" component="p">
                   {post.tema?.descricao}
                 </Typography>
-                
+                <Typography variant="body2" component="p">
+                  Postado por: {post.usuario?.nome}
+                </Typography>
+                <Typography variant="body1" component="p">
+                  Data: {Intl.DateTimeFormat('pt-BR', { dateStyle: 'short', timeStyle: 'medium' }).format(new Date(post.data))}
+                </Typography>
+
               </CardContent>
               <CardActions>
                 <Box display="flex" justifyContent="center" mb={1.5}>
@@ -93,7 +111,7 @@ function ListaPostagem() {
             </Card>
           </Box>
         ))
-      }
+      )}
     </>
   )
 }

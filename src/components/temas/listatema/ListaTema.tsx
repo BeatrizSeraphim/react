@@ -6,16 +6,21 @@ import './ListaTema.css';
 import Tema from '../../../models/Tema';
 
 import { busca } from '../../../services/Service';
-import { useSelector } from 'react-redux';
-import { TokenState } from '../../../store/tokens/tokensReducer';
+import { useDispatch, useSelector } from 'react-redux';
+
 import { toast } from 'react-toastify';
+import { addToken } from '../../../store/token/Actions';
+import { UserState } from '../../../store/token/Reducer';
 
 function ListaTema() {
 
   const [temas, setTemas] = useState<Tema[]>([])
-  const token = useSelector<TokenState, TokenState["tokens"]>(
+
+  const dispatch = useDispatch()
+
+  const token = useSelector<UserState, UserState["tokens"]>(
     (state) => state.tokens
-  );
+  )
   let navigate = useNavigate();
 
   useEffect(() => {
@@ -36,11 +41,17 @@ function ListaTema() {
 
 
   async function getTema() {
-    await busca("/temas", setTemas, {
-      headers: {
-        'Authorization': token
+    try {
+      await busca("/temas", setTemas, {
+        headers: {
+          'Authorization': token
+        }
+      })
+    } catch (error: any) {
+      if (error.response?.status === 403) {
+        dispatch(addToken(''))
       }
-    })
+    }
   }
 
 
@@ -50,16 +61,16 @@ function ListaTema() {
 
   return (
     <>
-      {
+      {temas.length === 0 ? (<div className="spinner"></div>) : (
         temas.map(tema => (
           <Box m={2} >
             <Card variant="outlined">
               <CardContent>
                 <Typography color="textSecondary" gutterBottom>
-                  Tema
+                  Descrição
                 </Typography>
                 <Typography variant="h5" component="h2">
-                 {tema.descricao}
+                  {tema.descricao}
                 </Typography>
               </CardContent>
               <CardActions>
@@ -84,7 +95,7 @@ function ListaTema() {
             </Card>
           </Box>
         ))
-      }
+      )}
     </>
   );
 }

@@ -16,6 +16,9 @@ import { Provider } from 'react-redux';
 import store from './store/store';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
+import Perfil from './paginas/perfil/Perfil';
+import ListaPostagemPorTitulo from './components/postagens/listapostagemportitulo/ListaPostagemPorTitulo';
+import AtualizarUsuario from './components/usuario/AtualizarUsuario';
 
 function App() {
   return (
@@ -49,7 +52,12 @@ function App() {
             <Route path="/deletarPostagem/:id" element={<DeletarPostagem />} />
 
             <Route path="/deletarTema/:id" element={<DeletarTema />} />
+
+            <Route path="/perfil" element={<Perfil />} />
             
+            <Route path="/atualizarusuario" element={<AtualizarUsuario />} />
+            
+            <Route path="/postagensportitulo" element={<ListaPostagemPorTitulo />} />
 
           </Routes>
         </div>

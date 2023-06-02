@@ -1,6 +1,6 @@
 .textos1 {
     font-weight: bold !important;
-    
+
 }
 
 .imagem {
@@ -17,11 +17,11 @@
     text-decoration: none;
 }
 
-.entrar{
-    background: rgb(219,183,159);
-    background: linear-gradient(90deg, rgba(219,183,159,1) 0%, rgba(186,101,69,1) 35%, rgba(126,46,31,0.8323704481792717) 100%);
+.entrar {
+    background: rgb(219, 183, 159);
+    background: linear-gradient(90deg, rgba(219, 183, 159, 1) 0%, rgba(186, 101, 69, 1) 35%, rgba(126, 46, 31, 0.8323704481792717) 100%);
 }
 
-.escrita{
+.escrita {
     background: white
 }
