@@ -14,7 +14,7 @@ function TabPostagem() {
   return (
     <>
       <TabContext value={value}>
-        <AppBar position="static">
+        <AppBar position="static" style={{ background: "#8A2908"}}>
           <Tabs centered indicatorColor="secondary" onChange={handleChange}>
             <Tab label="Todas as postagens" value="1"/>
             <Tab label="Sobre-nós" value="2" />
@@ -27,7 +27,8 @@ function TabPostagem() {
         </TabPanel>
         <TabPanel value="2">
           <Typography variant="h5" gutterBottom color="textPrimary" component="h5" align="center" className="titulo">Sobre-nós</Typography>
-          <Typography variant="body1" gutterBottom color="textPrimary" align="justify">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Dignissimos ut eveniet natus totam et, voluptate dicta tempore alias, odio nobis non eius cupiditate minima inventore pariatur! Ipsum itaque consectetur voluptatibus. Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo velit consequuntur suscipit fugiat, nam quis quod quaerat veritatis et, vel ratione beatae, facere neque! Quo animi porro voluptate saepe deleniti? Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore adipisci, officia aut quidem dolorum deserunt iure dolorem doloribus velit nobis quas consequatur at ullam odit, nesciunt est nulla nihil excepturi!</Typography>
+          <Typography variant="body1" gutterBottom color="textPrimary" align="justify">Olá! Eu Sou a Beatriz Seraphim e vou falar um pouco sobre mim. Bom, Sou natural de São Paulo, tenho 21 anos, sou encantada pela vida e por tudo que ela pode nos proporcionar. Criei esse Blog para que possamos juntos ensinar, aprender e dar dicas de coisas que realmente nos fazem bem! Aqui falaremos sobre cabelos e lugares. Espero que todos se sintam bem e confortáveis em estarem aqui comigo. Obrigada! Se quiserem me conhecer mais é só clicar nos links abaixo! ♥
+</Typography>
         </TabPanel>
       </TabContext>
     </>
